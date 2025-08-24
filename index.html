@@ -1,340 +1,1390 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Personal Webpage</title>
-    <title>BRADENGELHARDT</title>
-    <meta name="description" content="Web designer and front-end developer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portfolio de Mohamed Amine Nouri — Front-End Developer. Sites responsives, UI/UX, e-commerce, WordPress, React/Next.js."
+    />
+    <title>Mohamed Amine Nouri - Front-End Developer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css?family=Raleway:100,200,400,600"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
-      type="text/css" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.4/jquery.fullPage.min.css"
-      rel="stylesheet"
-      type="text/css" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    />
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
-    <link rel="stylesheet" href="css/styles.css" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- GSAP for lightweight hero animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#6366f1",
+              secondary: "#06b6d4",
+              accent: "#f97316",
+              dark: "#1e293b",
+              light: "#f8fafc",
+            },
+            fontFamily: {
+              inter: ["Inter", "sans-serif"],
+              poppins: ["Poppins", "sans-serif"],
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "gradient-x": "gradient-x 15s ease infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-12px)" },
+              },
+              "gradient-x": {
+                "0%, 100%": { backgroundPosition: "0% 50%" },
+                "50%": { backgroundPosition: "100% 50%" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Base typography & accessibility */
+      :root {
+        color-scheme: light;
+      }
+
+      body {
+        font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        background-color: #f8fafc; /* light */
+        color: #0f172a; /* dark-ish */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Poppins", sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Navbar blur effect */
+      .navbar-blur {
+        backdrop-filter: blur(8px);
+        background-color: rgba(248, 250, 252, 0.75);
+      }
+
+      /* Gradient animated background (subtle) */
+      .gradient-bg {
+        background: linear-gradient(120deg, #6366f1, #06b6d4, #f97316);
+        background-size: 300% 300%;
+        animation: gradient-x 12s ease infinite;
+      }
+
+      /* Floating shapes (decorative only) */
+      .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.08;
+      }
+      .shape-1 {
+        width: 320px;
+        height: 320px;
+        background: #6366f1;
+        top: 4%;
+        left: 2%;
+      }
+      .shape-2 {
+        width: 220px;
+        height: 220px;
+        background: #06b6d4;
+        bottom: 12%;
+        right: 6%;
+      }
+      .shape-3 {
+        width: 160px;
+        height: 160px;
+        background: #f97316;
+        top: 48%;
+        right: 18%;
+      }
+
+      /* Project overlay */
+      .project-overlay {
+        transition: opacity 0.28s ease, transform 0.28s ease;
+      }
+      .project-card:focus-within .project-overlay,
+      .project-card:hover .project-overlay {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Typewriter fallback removed for accessibility; use JS animation */
+
+      /* Skill progress animation handled in JS */
+
+      /* Scroll-to-top button */
+      #scrollToTop {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      /* Respect prefer-reduced-motion */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+
+      /* Focus-visible for keyboard users */
+      .focus-outline:focus {
+        outline: 3px solid rgba(99, 102, 241, 0.25);
+        outline-offset: 3px;
+      }
+    </style>
   </head>
-  <body>
-    <!-- partial:index.partial.html -->
-    <body>
-      <!-- navbar header -->
-      <div class="nav-header">
-        <div class="nav-brand">
-          <img src="assets/img/logo.png" />
+  <body class="bg-light text-dark">
+    <!-- Navigation Bar -->
+    <nav
+      id="navbar"
+      role="navigation"
+      aria-label="Navigation principale"
+      class="fixed top-0 w-full z-50 transition-all duration-300 py-4"
+    >
+      <div class="container mx-auto px-6 flex justify-between items-center">
+        <a
+          href="#home"
+          class="flex items-center text-2xl font-bold text-primary focus-outline gap-2"
+          aria-label="Aller à l'accueil"
+        >
+          <i class="fas fa-code text-xl" aria-hidden="true"></i>
+          Mohamed Amine Nouri
+        </a>
+
+        <div class="hidden md:flex items-center space-x-8">
+          <a
+            href="#home"
+            class="nav-link text-dark hover:text-primary transition-colors"
+            data-target="home"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="nav-link text-dark hover:text-primary transition-colors"
+            data-target="about"
+            >About</a
+          >
+          <a
+            href="#skills"
+            class="nav-link text-dark hover:text-primary transition-colors"
+            data-target="skills"
+            >Skills</a
+          >
+          <a
+            href="#projects"
+            class="nav-link text-dark hover:text-primary transition-colors"
+            data-target="projects"
+            >Projects</a
+          >
+          <a
+            href="#contact"
+            class="nav-link text-dark hover:text-primary transition-colors"
+            data-target="contact"
+            >Contact</a
+          >
+          <a
+            href="#contact"
+            class="bg-primary text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+            >Hire Me</a
+          >
         </div>
-        <i class="fa fa-bars fa-3x"></i>
-        <div class="header-links">
-          <ul>
-            <li data-menuanchor="fourthPage"><a href="#contact">CONTACT</a></li>
-            <li data-menuanchor="thirdPage">
-              <a href="#portfolio">PORTFOLIO</a>
-            </li>
-            <li data-menuanchor="secondPage"><a href="#about">ABOUT</a></li>
-          </ul>
+
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-button"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          aria-label="Ouvrir le menu mobile"
+          class="md:hidden text-dark focus:outline-none"
+        >
+          <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white py-4 px-6"
+        role="menu"
+        aria-label="Menu mobile"
+      >
+        <a
+          href="#home"
+          class="block py-2 text-dark hover:text-primary transition-colors"
+          role="menuitem"
+          >Home</a
+        >
+        <a
+          href="#about"
+          class="block py-2 text-dark hover:text-primary transition-colors"
+          role="menuitem"
+          >About</a
+        >
+        <a
+          href="#skills"
+          class="block py-2 text-dark hover:text-primary transition-colors"
+          role="menuitem"
+          >Skills</a
+        >
+        <a
+          href="#projects"
+          class="block py-2 text-dark hover:text-primary transition-colors"
+          role="menuitem"
+          >Projects</a
+        >
+        <a
+          href="#contact"
+          class="block py-2 text-dark hover:text-primary transition-colors"
+          role="menuitem"
+          >Contact</a
+        >
+        <a
+          href="#contact"
+          class="block mt-4 bg-primary text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-colors text-center"
+          role="menuitem"
+          >Hire Me</a
+        >
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="min-h-screen flex items-center relative overflow-hidden pt-16"
+    >
+      <!-- Floating shapes (decorative) -->
+      <div class="floating-shape shape-1" aria-hidden="true"></div>
+      <div class="floating-shape shape-2" aria-hidden="true"></div>
+      <div class="floating-shape shape-3" aria-hidden="true"></div>
+
+      <div
+        class="container mx-auto px-6 flex flex-col md:flex-row items-center"
+      >
+        <div
+          class="md:w-1/2 text-center md:text-left mb-12 md:mb-0"
+          data-aos="fade-right"
+        >
+          <h1
+            class="text-3xl md:text-5xl font-bold mb-4 leading-tight"
+            id="hero-headline"
+            aria-live="polite"
+          >
+            <span class="block text-gray-700">Crafting</span>
+            <span class="block text-primary">Digital Experiences</span>
+            <span class="block text-gray-700">That Drive Growth</span>
+          </h1>
+
+          <h2 class="text-xl md:text-2xl mb-4 text-primary">
+            I'm Mohamed Amine Nouri, a Front-End Developer.
+          </h2>
+
+          <p class="text-lg mb-8 max-w-lg">
+            I build responsive, performant, and engaging websites tailored to
+            your business needs.
+          </p>
+
+          <div
+            class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4"
+          >
+            <a
+              href="#projects"
+              class="bg-primary text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition-all hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              >View My Work</a
+            >
+            <a
+              href="#"
+              class="border-2 border-primary text-primary px-6 py-3 rounded-full hover:bg-primary hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-primary"
+              >Download CV</a
+            >
+          </div>
+        </div>
+
+        <div class="md:w-1/2 flex justify-center" data-aos="fade-left">
+          <div class="relative">
+            <div
+              class="w-64 h-64 md:w-80 md:h-80 rounded-xl overflow-hidden border-4 border-primary shadow-2xl transform-gpu"
+              aria-hidden="true"
+            >
+              <img
+                src="./img/photo-portrait.png"
+                alt="Portrait de Mohamed Amine Nouri"
+                class="w-full h-full object-cover animate-float"
+                loading="lazy"
+              />
+            </div>
+
+            <div
+              class="absolute -bottom-4 -right-4 bg-accent text-white p-4 rounded-full shadow-lg animate-float"
+              aria-hidden="true"
+            >
+              <i class="fas fa-code text-2xl" aria-hidden="true"></i>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- end navbar header -->
+    </section>
 
-      <!-- sidebar slider -->
-      <div class="nav-screen">
-        <i class="fa fa-times fa-3x"></i>
-        <div class="nav-container">
-          <div class="nav-links">
-            <ul id="myMenu">
-              <li data-menuanchor="secondPage"><a href="#about">ABOUT</a></li>
-              <li data-menuanchor="thirdPage">
-                <a href="#portfolio">PORTFOLIO</a>
-              </li>
-              <li data-menuanchor="fourthPage">
-                <a href="#contact">CONTACT</a>
-              </li>
-            </ul>
+    <!-- About Me Section -->
+    <section id="about" class="py-20 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-center mb-10"
+          data-aos="fade-up"
+        >
+          About Me
+        </h2>
+
+        <div class="flex flex-col lg:flex-row items-center">
+          <div
+            class="lg:w-1/3 mb-10 lg:mb-0 flex justify-center"
+            data-aos="fade-right"
+          >
+            <div
+              class="w-56 h-56 rounded-full overflow-hidden border-4 border-white shadow-xl"
+            >
+              <img
+                src="./img/logo.png"
+                alt="Photo de Mohamed Amine Nouri"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="lg:w-2/3 lg:pl-12" data-aos="fade-left">
+            <p class="text-lg mb-6">
+              I'm a passionate front-end developer with a love for creating
+              beautiful, functional websites that make a difference. My journey
+              in web development started with curiosity and has evolved into a
+              career dedicated to crafting digital experiences that are not only
+              visually stunning but also intuitive and user-friendly.
+            </p>
+
+            <p class="text-lg mb-6">
+              I believe in clean code, user-centric design, and delivering
+              projects on time. My approach combines technical expertise with
+              creative problem-solving to deliver solutions that exceed
+              expectations and drive business growth.
+            </p>
+
+            <h3 class="text-lg font-semibold mb-4">My Services</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div
+                class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                data-aos="zoom-in"
+              >
+                <i class="fas fa-globe text-2xl text-primary mb-3"></i>
+                <h4 class="font-semibold mb-1">Custom Websites</h4>
+                <p class="text-gray-600 text-sm">
+                  Tailored websites designed specifically for your business
+                  needs.
+                </p>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                data-aos="zoom-in"
+                data-aos-delay="50"
+              >
+                <i class="fas fa-code text-2xl text-primary mb-3"></i>
+                <h4 class="font-semibold mb-1">Dynamic Applications</h4>
+                <p class="text-gray-600 text-sm">
+                  Interactive web applications with advanced functionality.
+                </p>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                data-aos="zoom-in"
+                data-aos-delay="100"
+              >
+                <i class="fas fa-shopping-cart text-2xl text-primary mb-3"></i>
+                <h4 class="font-semibold mb-1">E-commerce</h4>
+                <p class="text-gray-600 text-sm">
+                  Complete online stores with payment integration.
+                </p>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                data-aos="zoom-in"
+                data-aos-delay="150"
+              >
+                <i class="fab fa-wordpress text-2xl text-primary mb-3"></i>
+                <h4 class="font-semibold mb-1">WordPress Development</h4>
+                <p class="text-gray-600 text-sm">
+                  Custom themes and plugins for WordPress sites.
+                </p>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                data-aos="zoom-in"
+                data-aos-delay="200"
+              >
+                <i class="fas fa-paint-brush text-2xl text-primary mb-3"></i>
+                <h4 class="font-semibold mb-1">UI/UX Design</h4>
+                <p class="text-gray-600 text-sm">
+                  User-centered design for optimal experiences.
+                </p>
+              </div>
+
+              <div
+                class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                data-aos="zoom-in"
+                data-aos-delay="250"
+              >
+                <i class="fas fa-search text-2xl text-primary mb-3"></i>
+                <h4 class="font-semibold mb-1">SEO Optimization</h4>
+                <p class="text-gray-600 text-sm">
+                  Improve your website's visibility and ranking.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- end navbar slider -->
+    </section>
 
-      <!-- begin fullpage -->
+    <!-- Skills Section -->
+    <section id="skills" class="py-16">
+      <div class="container mx-auto px-6">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-center mb-10"
+          data-aos="fade-up"
+        >
+          Skills & Technologies
+        </h2>
 
-      <div id="fullpage">
-        <!-- begin section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-white p-6 rounded-xl shadow-lg" data-aos="fade-right">
+            <h3 class="text-lg font-semibold mb-4">Technical Skills</h3>
 
-        <div class="section aboutme" data-anchor="aboutme">
-          <div class="opaque-bg animated fadeInDown">
-            <h1 style="color: white">
-              Nouri<span style="color: #ff6363">/</span>Med Amine
-            </h1>
-            <p>
-              <span id="holder"></span><span class="blinking-cursor">|</span>
-            </p>
-          </div>
-          <i id="moveDown" class="fa fa-chevron-down fa-3x bounce"></i>
-        </div>
-        <!-- end section -->
-
-        <!-- begin section -->
-
-        <div class="section" data-anchor="skills">
-          <div class="content">
-            <h1 class="wow fadeInDown" data-wow-delay="0.2s">ABOUT ME</h1>
-            <p class="wow fadeInDown" data-wow-delay="0.2s">
-              I'm Med Amine Nouri, a passionate and creative web developer. My
-              goal is to transform your ideas into elegant and functional code.
-              I'm your perfect partner for web projects, from showcase websites
-              to complex applications.😀😎
-            </p>
-
-            <div class="wow fadeInUp container-skillbar" data-wow-delay="0.2s">
-              <div class="skillbar clearfix" data-percent="90%">
-                <div class="skillbar-title" style="background: #dd1e2f">
-                  <span>HTML5</span>
-                </div>
-                <div class="skillbar-bar" style="background: #dd1e2f"></div>
-                <div class="skill-bar-percent">90%</div>
+            <!-- Skill item -->
+            <div class="mb-5">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">HTML5</span><span>95%</span>
               </div>
-              <!-- End Skill Bar -->
-
-              <div class="skillbar clearfix" data-percent="80%">
-                <div class="skillbar-title" style="background: #ebb035">
-                  <span>CSS3</span>
-                </div>
-                <div class="skillbar-bar" style="background: #ebb035"></div>
-                <div class="skill-bar-percent">80%</div>
-              </div>
-              <!-- End Skill Bar -->
-
-              <div class="skillbar clearfix" data-percent="75%">
-                <div class="skillbar-title" style="background: #218559">
-                  <span>Photoshop</span>
-                </div>
-                <div class="skillbar-bar" style="background: #218559"></div>
-                <div class="skill-bar-percent">75%</div>
-              </div>
-              <!-- End Skill Bar -->
-
-              <div class="skillbar clearfix" data-percent="45%">
-                <div class="skillbar-title" style="background: #6840d4">
-                  <span>Rails</span>
-                </div>
-                <div class="skillbar-bar" style="background: #6840d4"></div>
-                <div class="skill-bar-percent">45%</div>
-              </div>
-              <!-- End Skill Bar -->
-
-              <div class="skillbar clearfix" data-percent="30%">
-                <div class="skillbar-title" style="background: #06a2cb">
-                  <span>jQuery</span>
-                </div>
-                <div class="skillbar-bar" style="background: #06a2cb"></div>
-                <div class="skill-bar-percent">30%</div>
-              </div>
-              <!-- End Skill Bar -->
-
-              <div class="skillbar clearfix" data-percent="20%">
-                <div class="skillbar-title" style="background: #ab4dd2">
-                  <span>PHP</span>
-                </div>
-                <div class="skillbar-bar" style="background: #ab4dd2"></div>
-                <div class="skill-bar-percent">20%</div>
-              </div>
-              <!-- End Skill Bar -->
-            </div>
-          </div>
-        </div>
-        <!-- end section -->
-
-        <!-- begin section -->
-
-        <div class="section" data-anchor="projects">
-          <div class="content-slide">
-            <div class="slide">
-              <h1 class="wow fadeInDown" data-wow-delay="0.2s">XFAIRE</h1>
-              <p class="wow fadeInDown" data-wow-delay="0.2s">
-                Digital streaming service
-              </p>
-              <img
-                class="wow fadeInUp"
-                data-wow-delay="0.2s"
-                data-src="https://s3-us-west-2.amazonaws.com/bradengelhardt/assets/xfaire.jpg" />
-            </div>
-            <div class="slide">
-              <h1>MACHETE ENERGY</h1>
-              <p>Energy drink website</p>
-              <img
-                data-src="https://s3-us-west-2.amazonaws.com/bradengelhardt/assets/machete.jpg" />
-            </div>
-            <div class="slide">
-              <h1>PORTFOLIO</h1>
-              <p>
-                Mockup of a personal portfolio I was working on for a friend.
-              </p>
-              <img
-                data-src="https://s3-us-west-2.amazonaws.com/bradengelhardt/assets/cascioportfolio.jpg" />
-            </div>
-            <div class="slide">
-              <h1>THATONEBLOG</h1>
-              <p>Minimalist blogging platform.</p>
-              <img
-                data-src="https://s3-us-west-2.amazonaws.com/bradengelhardt/assets/blog.jpg" />
-            </div>
-            <div class="slide">
-              <h1>PIXBORED</h1>
-              <p>Website for sharing images and gifs.</p>
-              <img
-                data-src="https://s3-us-west-2.amazonaws.com/bradengelhardt/assets/pixbored.jpg" />
-            </div>
-            <div class="slide">
-              <h1>PERSONAL WEBSITE</h1>
-              <p>Responsive vertical/horizontal header website theme.</p>
-              <img
-                data-src="https://s3-us-west-2.amazonaws.com/bradengelhardt/assets/personalsite.jpg" />
-            </div>
-          </div>
-        </div>
-        <!-- end section -->
-
-        <!-- begin section -->
-
-        <div class="section" data-anchor="contact">
-          <div class="content wow fadeInDown" data-wow-delay="0.2s">
-            <h1>CONTACT ME</h1>
-            <p>
-              Whether you're interested in working with me or just want to say
-              hello, I'd love to hear from you!
-            </p>
-            <br />
-            <div class="contact-form">
-              <div id="form-messages"></div>
-              <form
-                id="ajax-contact"
-                method="post"
-                role="form"
-                action="contact.php"
-                data-toggle="validator">
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+                aria-hidden="true"
+              >
                 <div
-                  class="form-group has-feedback wow fadeInLeft"
-                  data-wow-delay="0.6s">
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="95"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">CSS / Tailwind CSS</span
+                ><span>90%</span>
+              </div>
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+              >
+                <div
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="90"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">JavaScript</span><span>85%</span>
+              </div>
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+              >
+                <div
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="85"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">React</span><span>80%</span>
+              </div>
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+              >
+                <div
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="80"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Next.js</span><span>75%</span>
+              </div>
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+              >
+                <div
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="75"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">PHP</span><span>70%</span>
+              </div>
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+              >
+                <div
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="70"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl shadow-lg" data-aos="fade-left">
+            <h3 class="text-lg font-semibold mb-4">Design Tools</h3>
+
+            <div class="mb-5">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Adobe Photoshop</span><span>85%</span>
+              </div>
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+              >
+                <div
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="85"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Figma</span><span>90%</span>
+              </div>
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+              >
+                <div
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="90"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Canva</span><span>95%</span>
+              </div>
+              <div
+                class="skill-progress bg-gray-200 rounded-full h-3 overflow-hidden"
+              >
+                <div
+                  class="skill-progress-bar h-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                  data-width="95"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center" data-aos="fade-up">
+          <h3 class="text-lg font-semibold mb-4">Technologies I Work With</h3>
+          <div class="flex flex-wrap justify-center gap-3">
+            <span
+              class="bg-gray-100 px-4 py-2 rounded-full flex items-center gap-2"
+              ><i class="fab fa-html5 text-orange-500"></i>HTML5</span
+            >
+            <span
+              class="bg-gray-100 px-4 py-2 rounded-full flex items-center gap-2"
+              ><i class="fab fa-css3-alt text-blue-500"></i>CSS3</span
+            >
+            <span
+              class="bg-gray-100 px-4 py-2 rounded-full flex items-center gap-2"
+              ><i class="fab fa-js-square text-yellow-500"></i>JavaScript</span
+            >
+            <span
+              class="bg-gray-100 px-4 py-2 rounded-full flex items-center gap-2"
+              ><i class="fab fa-react text-cyan-500"></i>React</span
+            >
+            <span
+              class="bg-gray-100 px-4 py-2 rounded-full flex items-center gap-2"
+              >⚡ Next.js</span
+            >
+            <span
+              class="bg-gray-100 px-4 py-2 rounded-full flex items-center gap-2"
+              ><i class="fab fa-php text-indigo-500"></i>PHP</span
+            >
+            <span
+              class="bg-gray-100 px-4 py-2 rounded-full flex items-center gap-2"
+              ><i class="fab fa-wordpress text-blue-600"></i>WordPress</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-center mb-10"
+          data-aos="fade-up"
+        >
+          Featured Projects
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Reusable project card (6 examples) -->
+
+          <!-- Project 1 -->
+          <article
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden relative focus:outline-none"
+            tabindex="0"
+            data-aos="fade-up"
+          >
+            <div class="relative overflow-hidden h-44">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="E-commerce Website - aperçu"
+                class="w-full h-full object-cover transform transition-transform duration-500"
+                loading="lazy"
+              />
+
+              <div
+                class="project-overlay absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 opacity-0"
+                aria-hidden="true"
+              >
+                <a
+                  href="#"
+                  class="bg-primary text-white px-4 py-2 rounded-full mb-3 focus:outline-none focus:ring-2 focus:ring-white"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="bg-dark text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="p-5">
+              <h3 class="text-lg font-semibold mb-2">E-commerce Website</h3>
+              <p class="text-gray-600 mb-3 text-sm">
+                A modern, responsive e-commerce platform with advanced filtering
+                and payment integration.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >React</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Node.js</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >MongoDB</span
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden relative focus:outline-none"
+            tabindex="0"
+            data-aos="fade-up"
+            data-aos-delay="80"
+          >
+            <div class="relative overflow-hidden h-44">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="Task Management App - aperçu"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div
+                class="project-overlay absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 opacity-0"
+                aria-hidden="true"
+              >
+                <a
+                  href="#"
+                  class="bg-primary text-white px-4 py-2 rounded-full mb-3 focus:outline-none focus:ring-2 focus:ring-white"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="bg-dark text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="p-5">
+              <h3 class="text-lg font-semibold mb-2">Task Management App</h3>
+              <p class="text-gray-600 mb-3 text-sm">
+                A collaborative task management application with real-time
+                updates and team features.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Vue.js</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Firebase</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Tailwind CSS</span
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden relative focus:outline-none"
+            tabindex="0"
+            data-aos="fade-up"
+            data-aos-delay="160"
+          >
+            <div class="relative overflow-hidden h-44">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="Portfolio Website - aperçu"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div
+                class="project-overlay absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 opacity-0"
+                aria-hidden="true"
+              >
+                <a
+                  href="#"
+                  class="bg-primary text-white px-4 py-2 rounded-full mb-3 focus:outline-none focus:ring-2 focus:ring-white"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="bg-dark text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="p-5">
+              <h3 class="text-lg font-semibold mb-2">Portfolio Website</h3>
+              <p class="text-gray-600 mb-3 text-sm">
+                A stunning portfolio website with smooth animations and
+                responsive design.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >HTML</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >CSS</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >JavaScript</span
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden relative focus:outline-none"
+            tabindex="0"
+            data-aos="fade-up"
+            data-aos-delay="240"
+          >
+            <div class="relative overflow-hidden h-44">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="Restaurant Website - aperçu"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div
+                class="project-overlay absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 opacity-0"
+                aria-hidden="true"
+              >
+                <a
+                  href="#"
+                  class="bg-primary text-white px-4 py-2 rounded-full mb-3 focus:outline-none focus:ring-2 focus:ring-white"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="bg-dark text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="p-5">
+              <h3 class="text-lg font-semibold mb-2">Restaurant Website</h3>
+              <p class="text-gray-600 mb-3 text-sm">
+                A modern restaurant website with online reservation menu and
+                gallery.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >WordPress</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >PHP</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >MySQL</span
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 5 -->
+          <article
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden relative focus:outline-none"
+            tabindex="0"
+            data-aos="fade-up"
+            data-aos-delay="320"
+          >
+            <div class="relative overflow-hidden h-44">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="Travel Blog - aperçu"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div
+                class="project-overlay absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 opacity-0"
+                aria-hidden="true"
+              >
+                <a
+                  href="#"
+                  class="bg-primary text-white px-4 py-2 rounded-full mb-3 focus:outline-none focus:ring-2 focus:ring-white"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="bg-dark text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="p-5">
+              <h3 class="text-lg font-semibold mb-2">Travel Blog</h3>
+              <p class="text-gray-600 mb-3 text-sm">
+                A responsive travel blog with beautiful image galleries and post
+                categories.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Next.js</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Markdown</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Tailwind CSS</span
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 6 -->
+          <article
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden relative focus:outline-none"
+            tabindex="0"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            <div class="relative overflow-hidden h-44">
+              <img
+                src="https://via.placeholder.com/600x400"
+                alt="Fitness Tracker App - aperçu"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div
+                class="project-overlay absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 opacity-0"
+                aria-hidden="true"
+              >
+                <a
+                  href="#"
+                  class="bg-primary text-white px-4 py-2 rounded-full mb-3 focus:outline-none focus:ring-2 focus:ring-white"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="bg-dark text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white"
+                  >GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="p-5">
+              <h3 class="text-lg font-semibold mb-2">Fitness Tracker App</h3>
+              <p class="text-gray-600 mb-3 text-sm">
+                A mobile-first fitness tracking application with workout plans
+                and progress charts.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >React Native</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Redux</span
+                >
+                <span
+                  class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+                  >Chart.js</span
+                >
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+      <div class="container mx-auto px-6">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-center mb-10"
+          data-aos="fade-up"
+        >
+          Get In Touch
+        </h2>
+
+        <div class="flex flex-col lg:flex-row">
+          <div class="lg:w-1/2 mb-8 lg:mb-0 lg:pr-8" data-aos="fade-right">
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+              <h3 class="text-lg font-semibold mb-4">Send a Message</h3>
+
+              <form id="contact-form" aria-label="Formulaire de contact">
+                <div class="mb-4">
+                  <label for="name" class="block text-gray-700 mb-1"
+                    >Name</label
+                  >
                   <input
                     type="text"
-                    class="form-control"
                     id="name"
                     name="name"
-                    placeholder="NAME"
-                    data-error="Field can't be blank!"
-                    required />
-                  <span
-                    class="glyphicon form-control-feedback"
-                    aria-hidden="true"></span>
-                  <div class="help-block with-errors"></div>
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                    aria-required="true"
+                  />
                 </div>
 
-                <div
-                  class="form-group has-feedback wow fadeInRight"
-                  data-wow-delay="0.8s">
+                <div class="mb-4">
+                  <label for="email" class="block text-gray-700 mb-1"
+                    >Email</label
+                  >
                   <input
                     type="email"
-                    class="form-control"
                     id="email"
                     name="email"
-                    placeholder="EMAIL"
-                    data-error="Field can't be blank!"
-                    required />
-                  <span
-                    class="glyphicon form-control-feedback"
-                    aria-hidden="true"></span>
-                  <div class="help-block with-errors"></div>
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                    aria-required="true"
+                  />
                 </div>
 
-                <div
-                  class="form-group has-feedback wow fadeInLeft"
-                  data-wow-delay="1s">
+                <div class="mb-4">
+                  <label for="message" class="block text-gray-700 mb-1"
+                    >Message</label
+                  >
                   <textarea
-                    data-minlength="10"
-                    class="form-control"
                     id="message"
                     name="message"
-                    placeholder="MESSAGE"
-                    data-error="Minimum of 10 characters"
-                    required></textarea>
-                  <span
-                    class="glyphicon form-control-feedback"
-                    aria-hidden="true"></span>
-                  <div class="help-block with-errors"></div>
+                    rows="5"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                    aria-required="true"
+                  ></textarea>
                 </div>
 
-                <div class="hidden">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="human"
-                    name="human"
-                    placeholder="" />
-                </div>
-                <div class="wow fadeInUp" data-wow-delay="1s">
-                  <button
-                    type="submit"
-                    id="submit"
-                    name="submit"
-                    class="btn btn-lg">
-                    SEND MESSAGE
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  class="w-full bg-primary text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                >
+                  Send Message
+                </button>
               </form>
-              <br />
+
+              <div
+                id="form-message"
+                class="mt-3 hidden"
+                role="status"
+                aria-live="polite"
+              ></div>
+            </div>
+          </div>
+
+          <div class="lg:w-1/2" data-aos="fade-left">
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+              <h3 class="text-lg font-semibold mb-4">Contact Information</h3>
+
+              <div class="mb-6">
+                <h4 class="font-medium text-gray-700 mb-2">
+                  Let's work together
+                </h4>
+                <p class="text-gray-600 text-sm">
+                  Feel free to reach out if you have any questions or would like
+                  to start a project.
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex items-center">
+                  <div
+                    class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center mr-3"
+                  >
+                    <i class="fas fa-phone" aria-hidden="true"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">Phone</h4>
+                    <p class="text-gray-600">+216 26 066 707</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center">
+                  <div
+                    class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center mr-3"
+                  >
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">Email</h4>
+                    <p class="text-gray-600">hello@mnouri.dev</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center">
+                  <div
+                    class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center mr-3"
+                  >
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">Location</h4>
+                    <p class="text-gray-600">Tunisia, Tunis</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <h4 class="font-medium text-gray-700 mb-2">Follow Me</h4>
+                <div class="flex space-x-3">
+                  <a
+                    href="#"
+                    class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                    aria-label="LinkedIn"
+                    ><i class="fab fa-linkedin-in" aria-hidden="true"></i
+                  ></a>
+                  <a
+                    href="#"
+                    class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                    aria-label="GitHub"
+                    ><i class="fab fa-github" aria-hidden="true"></i
+                  ></a>
+                  <a
+                    href="#"
+                    class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                    aria-label="Twitter"
+                    ><i class="fab fa-twitter" aria-hidden="true"></i
+                  ></a>
+                  <a
+                    href="#"
+                    class="bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+                    aria-label="Dribbble"
+                    ><i class="fab fa-dribbble" aria-hidden="true"></i
+                  ></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <!-- end section -->
-
-        <!-- begin section -->
-
-        <div class="section fp-auto-height">
-          <div class="footer">
-            <p>CONNECT WITH ME</p>
-            <div class="social-links">
-              <span
-                ><a
-                  href="https://www.linkedin.com/in/bradleyengelhardt"
-                  target="_blank"
-                  ><i class="fa fa-linkedin fa-2x"></i></a
-              ></span>
-              <span
-                ><a
-                  target="_blank"
-                  href="https://twitter.com/bradengelhardt"
-                  target="_blank"
-                  ><i class="fa fa-twitter fa-2x"></i></a
-              ></span>
-              <span
-                ><a href="https://github.com/SquishyAndroid" target="_blank"
-                  ><i class="fa fa-github fa-2x"></i></a
-              ></span>
-              <span
-                ><a href="https://codepen.io/SquishyAndroid/pens/public/"
-                  ><i class="fa fa-codepen fa-2x"></i></a
-              ></span>
-            </div>
-          </div>
-        </div>
-        <!-- end section -->
       </div>
-      <!-- end fullpage -->
-    </body>
-    <!-- partial -->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.4/jquery.fullPage.min.js"></script>
-    <script src="js/scripts.js"></script>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-6">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0 text-sm">
+            <p>
+              &copy; <span id="current-year"></span> Mohamed Amine Nouri. All
+              rights reserved.
+            </p>
+          </div>
+
+          <div>
+            <a
+              href="#home"
+              class="text-white hover:text-primary transition-colors flex items-center gap-2"
+            >
+              <i class="fas fa-arrow-up" aria-hidden="true"></i> Back to Top</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scrollToTop"
+      class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors"
+      aria-label="Remonter en haut"
+    >
+      <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+      // Init AOS
+      AOS.init({ duration: 900, once: true });
+
+      // Navbar: blur on scroll + active link highlighting
+      const navbar = document.getElementById("navbar");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const sections = Array.from(document.querySelectorAll("section[id]"));
+
+      function onScroll() {
+        if (window.scrollY > 60) navbar.classList.add("navbar-blur");
+        else navbar.classList.remove("navbar-blur");
+
+        // Active link
+        const fromTop = window.scrollY + 120;
+        sections.forEach((section) => {
+          if (
+            section.offsetTop <= fromTop &&
+            section.offsetTop + section.offsetHeight > fromTop
+          ) {
+            navLinks.forEach((link) =>
+              link.classList.remove("text-primary", "font-semibold")
+            );
+            const active = document.querySelector(
+              '.nav-link[data-target="' + section.id + '"]'
+            );
+            if (active) active.classList.add("text-primary", "font-semibold");
+          }
+        });
+
+        // Scroll-to-top visibility
+        const scrollToTop = document.getElementById("scrollToTop");
+        if (window.scrollY > 300) scrollToTop.classList.add("show");
+        else scrollToTop.classList.remove("show");
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+
+      // Mobile menu
+      const mobileBtn = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      mobileBtn.addEventListener("click", () => {
+        const expanded = mobileBtn.getAttribute("aria-expanded") === "true";
+        mobileBtn.setAttribute("aria-expanded", !expanded);
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      // Close mobile menu on link click
+      mobileMenu
+        .querySelectorAll("a")
+        .forEach((a) =>
+          a.addEventListener("click", () => mobileMenu.classList.add("hidden"))
+        );
+
+      // Scroll to top button
+      document
+        .getElementById("scrollToTop")
+        .addEventListener("click", () =>
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        );
+
+      // Current year
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+
+      // Skill progress bars using IntersectionObserver
+      const progressBars = document.querySelectorAll(".skill-progress-bar");
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const el = entry.target;
+              const width = el.getAttribute("data-width");
+              el.style.width = width + "%";
+              el.setAttribute("aria-valuenow", width);
+              obs.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      progressBars.forEach((pb) => observer.observe(pb));
+
+      // Contact form (client-only placeholder)
+      const form = document.getElementById("contact-form");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const msg = document.getElementById("form-message");
+        msg.classList.remove("hidden");
+        msg.className = "mt-3 bg-green-50 text-green-800 p-3 rounded";
+        msg.textContent =
+          "Merci ! Votre message a été envoyé. Je vous répondrai bientôt.";
+        form.reset();
+        setTimeout(() => msg.classList.add("hidden"), 4500);
+      });
+
+      // GSAP hero animations (stagger headline + float image)
+      window.addEventListener("load", () => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return; // respect user preference
+
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        tl.from("#hero-headline span", {
+          y: 20,
+          opacity: 0,
+          stagger: 0.18,
+          duration: 0.7,
+        });
+        tl.from(
+          ".w-64 img, .w-64",
+          { y: -8, opacity: 0, duration: 1 },
+          "-=0.4"
+        );
+
+        // Floating decor subtle animation
+        gsap.to(".floating-shape", {
+          y: -18,
+          repeat: -1,
+          yoyo: true,
+          duration: 6,
+          ease: "sine.inOut",
+          stagger: 1.2,
+        });
+      });
+
+      // Project card hover: zoom image and reveal overlay (also support keyboard focus)
+      document.querySelectorAll(".project-card").forEach((card) => {
+        const img = card.querySelector("img");
+        const overlay = card.querySelector(".project-overlay");
+
+        card.addEventListener("mouseover", () => {
+          img.style.transform = "scale(1.05)";
+          overlay.style.opacity = "1";
+          overlay.style.transform = "translateY(0)";
+        });
+        card.addEventListener("mouseout", () => {
+          img.style.transform = "";
+          overlay.style.opacity = "";
+          overlay.style.transform = "";
+        });
+
+        card.addEventListener("focusin", () => {
+          img.style.transform = "scale(1.05)";
+          overlay.style.opacity = "1";
+          overlay.style.transform = "translateY(0)";
+        });
+        card.addEventListener("focusout", () => {
+          img.style.transform = "";
+          overlay.style.opacity = "";
+          overlay.style.transform = "";
+        });
+      });
+
+      // Smooth anchor links for navigation
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", function (e) {
+          const targetId = this.getAttribute("href").slice(1);
+          if (!targetId) return;
+          const target = document.getElementById(targetId);
+          if (target) {
+            e.preventDefault();
+            const top =
+              target.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top, behavior: "smooth" });
+          }
+        });
+      });
+    </script>
   </body>
 </html>
