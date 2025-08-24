@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +8,9 @@
       content="Portfolio de Mohamed Amine Nouri — Front-End Developer. Sites responsives, UI/UX, e-commerce, WordPress, React/Next.js."
     />
     <title>Mohamed Amine Nouri - Front-End Developer</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="./img/logo.ico" type="image/x-icon" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1120,7 +1123,31 @@
                   </div>
                   <div>
                     <h4 class="font-medium">Phone</h4>
-                    <p class="text-gray-600">+216 26 066 707</p>
+                    <p class="text-gray-600 flex items-center gap-3">
+                      <a
+                        href="tel:+21626067067"
+                        class="hover:text-primary transition-colors"
+                        aria-label="Appeler +216 26 067 067"
+                        >+216 26 067 067</a
+                      >
+
+                      <!-- Copy button visible on desktop -->
+                      <button
+                        id="copy-phone-btn"
+                        class="hidden md:inline-flex items-center text-sm text-gray-500 hover:text-primary transition-colors"
+                        aria-label="Copy number"
+                        title="Copy number"
+                      >
+                        <i class="fas fa-copy mr-2" aria-hidden="true"></i>
+
+                        <span
+                          id="copy-tooltip"
+                          class="ml-2 hidden text-xs bg-dark text-white rounded px-2 py-1"
+                          aria-live="polite"
+                          >Copied !</span
+                        >
+                      </button>
+                    </p>
                   </div>
                 </div>
 
@@ -1132,7 +1159,31 @@
                   </div>
                   <div>
                     <h4 class="font-medium">Email</h4>
-                    <p class="text-gray-600">hello@mnouri.dev</p>
+                    <p class="text-gray-600 flex items-center gap-3">
+                      <a
+                        href="mailto:hello@mnouri.dev"
+                        class="hover:text-primary transition-colors"
+                        aria-label="Envoyer un email à hello@mnouri.dev"
+                        >nouri.webdev@gmail.com</a
+                      >
+
+                      <!-- Copy button for email (desktop) -->
+                      <button
+                        id="copy-email-btn"
+                        class="hidden md:inline-flex ml-3 focus:outline-none"
+                        aria-label="Copy email"
+                        title="Copy email"
+                      >
+                        <i class="fas fa-copy" aria-hidden="true"></i>
+
+                        <span
+                          id="copy-email-tooltip"
+                          class="ml-3 hidden text-xs bg-dark text-white rounded px-2 py-1"
+                          aria-live="polite"
+                          >Copied !</span
+                        >
+                      </button>
+                    </p>
                   </div>
                 </div>
 
@@ -1385,6 +1436,62 @@
           }
         });
       });
+
+      // Copy phone and email to clipboard (desktop helper)
+      (function () {
+        const phoneBtn = document.getElementById("copy-phone-btn");
+        const phoneTooltip = document.getElementById("copy-tooltip");
+        const emailBtn = document.getElementById("copy-email-btn");
+        const emailTooltip = document.getElementById("copy-email-tooltip");
+        const rawNumber = "+21626067067"; // for clipboard
+        const rawEmail = "nouri.webdev@gmail.com";
+
+        function showTooltip(el, text = "Copied !") {
+          if (!el) return;
+          el.textContent = text;
+          el.classList.remove("hidden");
+          setTimeout(() => el.classList.add("hidden"), 1800);
+        }
+
+        async function copyText(value, tooltipEl) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+              await navigator.clipboard.writeText(value);
+              showTooltip(tooltipEl);
+              return;
+            } catch (err) {
+              // fallthrough to fallback
+            }
+          }
+
+          // Fallback for older browsers
+          try {
+            const input = document.createElement("input");
+            input.value = value;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand("copy");
+            document.body.removeChild(input);
+            showTooltip(tooltipEl);
+          } catch (err) {
+            showTooltip(tooltipEl, "Erreur");
+          }
+        }
+
+        if (phoneBtn) {
+          phoneBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            copyText(rawNumber, phoneTooltip);
+          });
+        }
+
+        if (emailBtn) {
+          emailBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            copyText(rawEmail, emailTooltip);
+          });
+        }
+      })();
     </script>
   </body>
 </html>
