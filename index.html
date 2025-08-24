@@ -734,6 +734,74 @@
           opacity: 0.5;
         }
       }
+
+      /* Copy button styles */
+      .contact-text {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      /* Make the contact value take remaining space so button sits right */
+      .contact-text .contact-value {
+        flex: 1 1 auto;
+        word-break: break-word;
+        color: var(--text-light);
+      }
+
+      /* Wrapper to position tooltip */
+      .copy-wrapper {
+        position: relative;
+        display: inline-block;
+      }
+
+      .copy-tooltip {
+        position: absolute;
+        top: -36px;
+        right: 0;
+        background: var(--primary-color);
+        color: white;
+        padding: 6px 8px;
+        font-size: 12px;
+        border-radius: 8px;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.16s ease, transform 0.16s ease;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      .copy-tooltip.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .copy-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-light);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        cursor: pointer;
+        transition: all 0.18s ease;
+      }
+
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+        color: white;
+      }
+
+      .copy-btn.copied {
+        background: var(--primary-color);
+        color: white;
+        transform: scale(1.05);
+        border-color: var(--primary-color);
+      }
     </style>
   </head>
   <body>
@@ -1109,7 +1177,25 @@
             </div>
             <div>
               <h4>Email</h4>
-              <p>nouri.webdev@gmail.com</p>
+              <p class="contact-text">
+                <a
+                  class="contact-value"
+                  id="contact-email"
+                  href="mailto:nouri.webdev@gmail.com"
+                  aria-label="Envoyer un courriel à nouri.webdev@gmail.com"
+                  >nouri.webdev@gmail.com</a
+                >
+                <span class="copy-wrapper">
+                  <button
+                    class="copy-btn"
+                    id="copy-email-btn"
+                    aria-label="Copier email"
+                  >
+                    <i class="fas fa-copy"></i>
+                  </button>
+                  <span class="copy-tooltip" aria-hidden="true">Copied!</span>
+                </span>
+              </p>
             </div>
           </div>
           <div class="contact-item">
@@ -1118,7 +1204,25 @@
             </div>
             <div>
               <h4>Phone</h4>
-              <p>+216 26 067 067</p>
+              <p class="contact-text">
+                <a
+                  class="contact-value"
+                  id="contact-phone"
+                  href="tel:+21626067067"
+                  aria-label="Appeler +216 26 067 067"
+                  >+216 26 067 067</a
+                >
+                <span class="copy-wrapper">
+                  <button
+                    class="copy-btn"
+                    id="copy-phone-btn"
+                    aria-label="Copier téléphone"
+                  >
+                    <i class="fas fa-copy"></i>
+                  </button>
+                  <span class="copy-tooltip" aria-hidden="true">Copied!</span>
+                </span>
+              </p>
             </div>
           </div>
           <div class="contact-item">
@@ -1380,6 +1484,65 @@
 
         // Handle form submission
         handleForm();
+
+        // Attach contact copy handlers
+        (function () {
+          function flashBtn(btn) {
+            if (!btn) return;
+            // visual pulse on button
+            btn.classList.add("copied");
+            // show tooltip inside wrapper
+            const wrapper = btn.closest(".copy-wrapper");
+            const tip = wrapper ? wrapper.querySelector(".copy-tooltip") : null;
+            if (tip) tip.classList.add("visible");
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              if (tip) tip.classList.remove("visible");
+            }, 1600);
+          }
+
+          async function copyValue(value, btn) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              try {
+                await navigator.clipboard.writeText(value);
+                flashBtn(btn);
+                return;
+              } catch (e) {
+                // fallback below
+              }
+            }
+            try {
+              const input = document.createElement("input");
+              input.value = value;
+              document.body.appendChild(input);
+              input.select();
+              document.execCommand("copy");
+              document.body.removeChild(input);
+              flashBtn(btn);
+            } catch (e) {
+              console.error("Copy failed", e);
+            }
+          }
+
+          const emailBtn = document.getElementById("copy-email-btn");
+          const phoneBtn = document.getElementById("copy-phone-btn");
+          const emailEl = document.getElementById("contact-email");
+          const phoneEl = document.getElementById("contact-phone");
+
+          if (emailBtn && emailEl) {
+            emailBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              copyValue(emailEl.textContent.trim(), emailBtn);
+            });
+          }
+
+          if (phoneBtn && phoneEl) {
+            phoneBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              copyValue(phoneEl.textContent.trim(), phoneBtn);
+            });
+          }
+        })();
       });
     </script>
   </body>
