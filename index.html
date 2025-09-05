@@ -1002,6 +1002,44 @@
           display: none;
         }
       }
+      /* Styles pour les certifications */
+      .certification-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .certification-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .certification-image {
+        overflow: hidden;
+        border-radius: 16px;
+      }
+
+      .certification-image img {
+        transition: transform 0.5s ease;
+      }
+
+      .certification-image:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .certification-main {
+          grid-template-columns: 1fr !important;
+          gap: 30px !important;
+        }
+
+        .certification-details {
+          text-align: center;
+        }
+
+        .tech-tags {
+          justify-content: center !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1217,7 +1255,95 @@
         >
       </div>
     </section>
+    <section id="certifications">
+      <h2 class="section-title fade-in">Certifications</h2>
+      <div
+        class="certifications-container"
+        style="max-width: 1000px; margin: 0 auto"
+      >
+        <div
+          class="certification-main"
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+          "
+        >
+          <div class="certification-image slide-in-left">
+            <img
+              src="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/160089989"
+              alt="Google Analytics 4 Certification"
+              class="glass-card"
+              style="width: 100%; border-radius: 16px; padding: 10px"
+            />
+          </div>
+          <div class="certification-details slide-in-right">
+            <h3
+              style="
+                color: var(--accent-color);
+                margin-bottom: 20px;
+                font-size: 1.8rem;
+              "
+            >
+              Google Analytics 4 Certification
+            </h3>
+            <p style="opacity: 0.9; margin-bottom: 25px; font-size: 1.1rem">
+              Certification obtenue après avoir démontré une maîtrise complète
+              de Google Analytics 4, incluant la configuration, l'analyse de
+              données, la création de rapports personnalisés et l'utilisation
+              des fonctionnalités avancées comme les audiences et les
+              prédictions.
+            </p>
+            <div
+              class="tech-tags"
+              style="justify-content: start; margin-bottom: 30px"
+            >
+              <span class="tech-tag">Analyse de données</span>
+              <span class="tech-tag">Tracking</span>
+              <span class="tech-tag">Performance marketing</span>
+              <span class="tech-tag">KPI</span>
+            </div>
+            <a
+              href="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/160089989"
+              target="_blank"
+              class="btn btn-primary"
+            >
+              <i class="fas fa-external-link-alt"></i> Voir la certification
+              complète
+            </a>
+          </div>
+        </div>
 
+        <div class="certification-badges" style="text-align: center">
+          <h3 style="color: var(--accent-color); margin-bottom: 40px">
+            Badges associés
+          </h3>
+          <div
+            class="badge-container glass-card"
+            style="display: inline-block; padding: 30px; border-radius: 20px"
+          >
+            <img
+              src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/160089989"
+              alt="Google Analytics 4 Badge"
+              style="width: 100%; max-width: 180px; margin-bottom: 20px"
+            />
+            <h4 style="color: var(--accent-color); margin-bottom: 15px">
+              Badge Officiel GA4
+            </h4>
+            <a
+              href="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/160089989"
+              target="_blank"
+              class="btn btn-primary"
+              style="padding: 10px 20px"
+            >
+              <i class="fas fa-external-link-alt"></i> Voir le badge
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- Projects Section -->
     <section id="projects">
       <h2 class="section-title fade-in">Projets en vedette</h2>
