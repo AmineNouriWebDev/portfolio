@@ -73,12 +73,22 @@
         box-sizing: border-box;
       }
 
+      /* CORRECTION 2: Empêcher le débordement horizontal */
+      html,
+      body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+      }
+
       body {
         font-family: "Inter", sans-serif;
         background: var(--dark-bg);
         color: var(--text-light);
         overflow-x: hidden;
         line-height: 1.6;
+        width: 100%;
+        max-width: 100%;
       }
 
       /* Glassmorphism styles */
@@ -1181,9 +1191,9 @@
           <li><a href="#projects">Projets</a></li>
           <li><a href="#contact">Contact</a></li>
           <li>
-            <a href="./en/index.html" class="language-selector active">
-              <div class="language-flag">🇬🇧</div>
-              <span>EN</span>
+            <a href="../index.html" class="language-selector active">
+              <div class="language-flag">🇫🇷</div>
+              <span>FR</span>
             </a>
           </li>
         </ul>
@@ -2045,15 +2055,21 @@
             return;
           }
 
+          // CORRECTION 3: Temporary configuration with Formspree
+          // URL Formspree: https://formspree.io/f/mrbpjdwp
           try {
-            const response = await fetch(
-              "https://n8n-5gx0.onrender.com/webhook/cfbe4de5-f688-433d-8bb4-1f074e95850f",
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, message }),
-              }
-            );
+            const response = await fetch("https://formspree.io/f/mrbpjdwp", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: name,
+                email: email,
+                message: message,
+                _subject: "New message from portfolio",
+              }),
+            });
 
             if (response.ok) {
               Toastify({
@@ -2070,7 +2086,7 @@
             }
           } catch (error) {
             Toastify({
-              text: "Something went wrong. Try again later.",
+              text: "Something went wrong. Please try again later.",
               duration: 3000,
               close: true,
               gravity: "top",
@@ -2078,6 +2094,45 @@
               backgroundColor: "#f87171",
             }).showToast();
           }
+
+          /*
+          // OLD CONFIGURATION - VPS SERVER
+          // UNCOMMENT WHEN YOUR VPS SERVER IS ACTIVE
+          // 
+          // try {
+          //   const response = await fetch(
+          //     "https://n8n-5gx0.onrender.com/webhook/cfbe4de5-f688-433d-8bb4-1f074e95850f",
+          //     {
+          //       method: "POST",
+          //       headers: { "Content-Type": "application/json" },
+          //       body: JSON.stringify({ name, email, message }),
+          //     }
+          //   );
+          //
+          //   if (response.ok) {
+          //     Toastify({
+          //       text: "Your message has been sent successfully!",
+          //       duration: 3000,
+          //       close: true,
+          //       gravity: "top",
+          //       position: "right",
+          //       backgroundColor: "#4ade80",
+          //     }).showToast();
+          //     form.reset();
+          //   } else {
+          //     throw new Error("Request failed");
+          //   }
+          // } catch (error) {
+          //   Toastify({
+          //     text: "Something went wrong. Please try again later.",
+          //     duration: 3000,
+          //     close: true,
+          //     gravity: "top",
+          //     position: "right",
+          //     backgroundColor: "#f87171",
+          //   }).showToast();
+          // }
+          */
         });
       }
     </script>

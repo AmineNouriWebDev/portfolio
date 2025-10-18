@@ -77,12 +77,22 @@
         box-sizing: border-box;
       }
 
+      /* CORRECTION 2: Empêcher le débordement horizontal */
+      html,
+      body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+      }
+
       body {
         font-family: "Inter", sans-serif;
         background: var(--dark-bg);
         color: var(--text-light);
         overflow-x: hidden;
         line-height: 1.6;
+        width: 100%;
+        max-width: 100%;
       }
 
       /* Glassmorphism styles */
@@ -706,57 +716,7 @@
         transform: translateY(-5px);
       }
 
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .nav-links {
-          gap: 15px;
-        }
-
-        .about-grid,
-        .contact-grid {
-          grid-template-columns: 1fr;
-          gap: 40px;
-        }
-
-        .hero-content h1 {
-          font-size: 3rem;
-        }
-
-        .cta-buttons {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .projects-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .services-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .language-selector span {
-          display: none;
-        }
-      }
-
-      /* Scroll animations */
-      .fade-in {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      .slide-in-left {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-
-      .slide-in-right {
-        opacity: 0;
-        transform: translateX(50px);
-      }
-
-      /* Loading animation */
+      /* CORRECTION 1: Centrer le texte de chargement sur mobile */
       .loading-screen {
         position: fixed;
         top: 0;
@@ -769,6 +729,7 @@
         justify-content: center;
         z-index: 9999;
         transition: opacity 1s ease;
+        padding: 0 20px; /* Ajout de padding pour éviter que le texte ne touche les bords */
       }
 
       .loading-text {
@@ -784,6 +745,11 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
         animation: pulse 2s ease-in-out infinite;
+        text-align: center;
+        white-space: nowrap; /* Empêche le texte de passer à la ligne */
+        overflow: hidden; /* Cache le débordement */
+        text-overflow: ellipsis; /* Ajoute "..." si le texte est trop long */
+        max-width: 100%; /* Assure que le texte ne dépasse pas de l'écran */
       }
 
       @keyframes pulse {
@@ -988,20 +954,6 @@
         transform: translateY(-50%) translateX(-5px);
       }
 
-      /* Responsive pour mobile */
-      @media (max-width: 768px) {
-        .whatsapp-btn {
-          width: 55px;
-          height: 55px;
-          bottom: 90px;
-          right: 20px;
-          font-size: 1.6rem;
-        }
-
-        .whatsapp-btn .whatsapp-tooltip {
-          display: none;
-        }
-      }
       /* Styles pour les certifications */
       .certification-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -1025,21 +977,6 @@
         transform: scale(1.05);
       }
 
-      /* Responsive */
-      @media (max-width: 768px) {
-        .certification-main {
-          grid-template-columns: 1fr !important;
-          gap: 30px !important;
-        }
-
-        .certification-details {
-          text-align: center;
-        }
-
-        .tech-tags {
-          justify-content: center !important;
-        }
-      }
       .nav-container {
         display: flex;
         justify-content: space-between;
@@ -1090,6 +1027,15 @@
 
       /* Responsive Design */
       @media (max-width: 768px) {
+        /* CORRECTION 1: Ajustement du texte de chargement pour mobile */
+        .loading-text {
+          font-size: 1.5rem; /* Taille réduite pour mobile */
+          white-space: nowrap; /* Garde le texte sur une seule ligne */
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 90%; /* Limite la largeur pour éviter le débordement */
+        }
+
         nav {
           width: 90%;
           padding: 15px 20px;
@@ -1131,7 +1077,6 @@
           padding: 10px 0;
         }
 
-        /* Le reste de vos styles responsive existants */
         .about-grid,
         .contact-grid {
           grid-template-columns: 1fr;
@@ -1163,13 +1108,32 @@
           grid-template-columns: 1fr !important;
           gap: 30px !important;
         }
+
+        .whatsapp-btn {
+          width: 55px;
+          height: 55px;
+          bottom: 90px;
+          right: 20px;
+          font-size: 1.6rem;
+        }
+
+        .whatsapp-btn .whatsapp-tooltip {
+          display: none;
+        }
+      }
+
+      /* Ajustement pour les très petits écrans */
+      @media (max-width: 480px) {
+        .loading-text {
+          font-size: 1.3rem; /* Réduit encore plus sur très petits écrans */
+        }
       }
     </style>
   </head>
   <body>
     <!-- Loading Screen -->
     <div class="loading-screen" id="loading">
-      <div class="loading-text">Chargement de l'expérience...</div>
+      <div class="loading-text">Chargement de l'expérience..</div>
     </div>
 
     <!-- Animated Background -->
@@ -2073,15 +2037,21 @@
             return;
           }
 
+          // CORRECTION 3: Configuration temporaire avec Formspree
+          // URL Formspree: https://formspree.io/f/mrbpjdwp
           try {
-            const response = await fetch(
-              "https://n8n-5gx0.onrender.com/webhook/cfbe4de5-f688-433d-8bb4-1f074e95850f",
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, message }),
-              }
-            );
+            const response = await fetch("https://formspree.io/f/mrbpjdwp", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: name,
+                email: email,
+                message: message,
+                _subject: "Nouveau message depuis le portfolio",
+              }),
+            });
 
             if (response.ok) {
               Toastify({
@@ -2106,6 +2076,45 @@
               backgroundColor: "#f87171",
             }).showToast();
           }
+
+          /*
+          // ANCIENNE CONFIGURATION - SERVEUR VPS
+          // À DÉCOMMENTER LORSQUE VOTRE SERVEUR VPS SERA ACTIF
+          // 
+          // try {
+          //   const response = await fetch(
+          //     "https://n8n-5gx0.onrender.com/webhook/cfbe4de5-f688-433d-8bb4-1f074e95850f",
+          //     {
+          //       method: "POST",
+          //       headers: { "Content-Type": "application/json" },
+          //       body: JSON.stringify({ name, email, message }),
+          //     }
+          //   );
+          //
+          //   if (response.ok) {
+          //     Toastify({
+          //       text: "Votre message a été envoyé avec succès!",
+          //       duration: 3000,
+          //       close: true,
+          //       gravity: "top",
+          //       position: "right",
+          //       backgroundColor: "#4ade80",
+          //     }).showToast();
+          //     form.reset();
+          //   } else {
+          //     throw new Error("Request failed");
+          //   }
+          // } catch (error) {
+          //   Toastify({
+          //     text: "Quelque chose s'est mal passé. Veuillez réessayer plus tard.",
+          //     duration: 3000,
+          //     close: true,
+          //     gravity: "top",
+          //     position: "right",
+          //     backgroundColor: "#f87171",
+          //   }).showToast();
+          // }
+          */
         });
       }
     </script>
